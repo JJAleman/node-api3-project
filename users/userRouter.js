@@ -40,19 +40,47 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  // do your magic!
+  Users.getById(req.params.id)
+    .then(user => {
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(404).json({message: 'No user with that id'});
+      }
+    })
+    .catch( err => 
+      res.status(500).json({message: 'Something went wrong getting user', err})
+      );
 });
 
-router.get('/:id/posts', (req, res) => {
-  // do your magic!
+router.get('/:id/posts', validateUserId, (req, res) => {
+  Users.getUserPosts(req.params.id)
+    .then(posts => {
+      res.status(200).json(posts);
+    })
+    .catch( err =>
+      res.status(500).json({message: 'Something went wrong getting the user\s post', error: err})
+      )
 });
 
-router.delete('/:id', (req, res) => {
-  // do your magic!
+router.delete('/:id', validateUserId, (req, res) => {
+  Users.remove(req.params.id)
+    .then( () => {
+      res.status(200).json({message: 'User deleted'});
+    })
+    .catch( err =>
+      res.status(500).json({message: 'Something went wrong deleting the user', error: err})
+    );
 });
 
-router.put('/:id', (req, res) => {
-  // do your magic!
+router.put('/:id', validateUserId, validateUser, (req, res) => {
+  Users.update(req.params.id, req.body)
+    then( () =>{
+      res.status(200).json({message: 'Updated User'});
+    })
+    .catch( err => 
+      res.status(500).json({message: 'Something went wrong updating the user', error: err})
+      );
 });
 
 //custom middleware
