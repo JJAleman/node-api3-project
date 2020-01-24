@@ -83,8 +83,8 @@ router.delete("/:id", validateUserId, (req, res) => {
 });
 
 router.put("/:id", validateUserId, validateUser, (req, res) => {
-  Users.update(req.params.id, req.body);
-  then(() => {
+  Users.update(req.params.id, req.body)
+  .then(() => {
     res.status(200).json({ message: "Updated User" });
   }).catch(err =>
     res
