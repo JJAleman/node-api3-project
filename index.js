@@ -1,7 +1,5 @@
-// code away!
-const server = require('./api/server.js');
+const port = process.env.PORT || 8002;
 
-const port = 8000;
-server.listen(port, () => {
-    console.log(`*** API running on port ${port}`)
-});
+const server = require("./server.js");
+
+server.listen(port, () => console.log(`*** server listening on ${port} ***`))
