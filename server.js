@@ -21,7 +21,9 @@ server.get('/', (req, res) => {
 
 
 function logger(req, res, next) {
-  console.log(`${Date()} ${req.method} to ${req.url} from ${req.get('Origin')}`);
+  const timestamp = new Date().toLocaleString();
+  console.log(`[${timestamp}] ${req.method} to ${req.originalUrl}`);
+  next();
 }
 
 module.exports = server;
