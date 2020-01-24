@@ -1,4 +1,4 @@
-const port =  8002;
+const port = process.env.PORT || 8002;
 
 const server = require("./server.js");
 
